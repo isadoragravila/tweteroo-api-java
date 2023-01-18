@@ -1,6 +1,7 @@
 package com.tweteroo.api.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ public class TweetController {
     System.out.println("get all tweets");
   }
 
-  @GetMapping("/USERNAME")
-  public void listAllByUser() {
-    System.out.println("get all tweets by user");
+  @GetMapping("/{USERNAME}")
+  public void listAllByUser(@PathVariable String USERNAME) {
+    System.out.println(USERNAME);
   }
 }
