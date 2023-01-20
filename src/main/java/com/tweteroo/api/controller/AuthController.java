@@ -10,7 +10,7 @@ import com.tweteroo.api.dto.UserDTO;
 import com.tweteroo.api.services.UserService;
 
 @RestController
-@RequestMapping("/sign-up")
+@RequestMapping("/api/auth/sign-up")
 public class AuthController {
 
   @Autowired
