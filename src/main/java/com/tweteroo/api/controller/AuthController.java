@@ -7,18 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tweteroo.api.dto.UserDTO;
-import com.tweteroo.api.model.User;
-import com.tweteroo.api.repository.UserRepository;
+import com.tweteroo.api.services.UserService;
 
 @RestController
 @RequestMapping("/sign-up")
 public class AuthController {
 
   @Autowired
-  private UserRepository repository;
+  private UserService service;
   
   @PostMapping
   public void signUp(@RequestBody UserDTO req) {
-    repository.save(new User(req));
+    service.save(req);
   }
 }
