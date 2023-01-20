@@ -15,24 +15,24 @@ import com.tweteroo.api.model.Tweet;
 import com.tweteroo.api.services.TweetService;
 
 @RestController
-@RequestMapping("/tweets")
+@RequestMapping("/api/tweets")
 public class TweetController {
 
   @Autowired
   private TweetService service;
-
-  @PostMapping
-  public void createTweet(@RequestBody TweetDTO req) {
-    service.save(req);
-  }
 
   @GetMapping
   public List<Tweet> listAll() {
     return service.findAll();
   }
 
-  @GetMapping("/{USERNAME}")
-  public void listAllByUser(@PathVariable String USERNAME) {
-    System.out.println(USERNAME);
+  @GetMapping("/{username}")
+  public List<Tweet> listAllByUser(@PathVariable String username) {
+    return service.findByUsername(username);
+  }
+
+  @PostMapping
+  public void createTweet(@RequestBody TweetDTO req) {
+    service.save(req);
   }
 }
