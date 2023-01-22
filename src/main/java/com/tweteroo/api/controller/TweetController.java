@@ -3,6 +3,10 @@ package com.tweteroo.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,14 +31,16 @@ public class TweetController {
   private TweetService service;
 
   @GetMapping
-  public List<Tweet> listAll() {
-    return service.findAll();
+  public Page<Tweet> listAll(
+      @PageableDefault(page = 0, size = 5, sort = { "id" }, direction = Sort.Direction.DESC) Pageable page) {
+
+    return service.findAll(page);
   }
 
   @GetMapping("/{username}")
   public ResponseEntity<List<Tweet>> listAllByUser(@PathVariable String username) {
     var tweetsByUser = service.findByUsername(username);
-    if(tweetsByUser != null) {
+    if (tweetsByUser != null) {
       return ResponseEntity.ok().body(tweetsByUser);
     } else {
       return ResponseEntity.notFound().build();

@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.tweteroo.api.dto.TweetDTO;
@@ -22,9 +23,9 @@ public class TweetService {
   @Autowired
   private UserRepository userRepository;
 
-  public List<Tweet> findAll() {
-    //adicionar paginação
-    return tweetRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+  public Page<Tweet> findAll(Pageable page) {
+
+    return tweetRepository.findAll(page);
   }
 
   public List<Tweet> findByUsername(String username) {
@@ -39,7 +40,7 @@ public class TweetService {
     List<User> user = userRepository.findByUsername(tweet.username());
 
     if(user.isEmpty()) {
-      return null; //retornar erro
+      return null;
     }
 
     return tweetRepository.save(new Tweet(tweet, user.get(0).getAvatar()));
