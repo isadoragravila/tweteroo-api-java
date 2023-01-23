@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tweteroo.api.dto.TweetDTO;
@@ -40,7 +39,8 @@ public class TweetController {
   @GetMapping("/{username}")
   public ResponseEntity<List<Tweet>> listAllByUser(@PathVariable String username) {
     var tweetsByUser = service.findByUsername(username);
-    if (tweetsByUser != null) {
+
+    if (!tweetsByUser.isEmpty()) {
       return ResponseEntity.ok().body(tweetsByUser);
     } else {
       return ResponseEntity.notFound().build();
@@ -48,8 +48,13 @@ public class TweetController {
   }
 
   @PostMapping
-  @ResponseStatus(code = HttpStatus.CREATED)
-  public void createTweet(@RequestBody TweetDTO req) {
-    service.save(req);
+  public ResponseEntity<Void> createTweet(@RequestBody TweetDTO req) {
+    var savedTweet = service.save(req);
+    
+    if(savedTweet != null) {
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    } else {
+      return ResponseEntity.notFound().build();
+    }
   }
 }
