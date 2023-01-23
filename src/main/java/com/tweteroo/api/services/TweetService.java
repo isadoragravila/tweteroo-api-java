@@ -1,6 +1,5 @@
 package com.tweteroo.api.services;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +28,7 @@ public class TweetService {
   }
 
   public List<Tweet> findByUsername(String username) {
-    List<Tweet> tweetsByUser = tweetRepository.findByUsername(username);
-
-    Collections.sort(tweetsByUser, (t1, t2) -> (int) (t2.getId() - t1.getId()));
-
-    return tweetsByUser;
+    return tweetRepository.findAllByUsernameOrderByIdDesc(username);
   }
 
   public Tweet save(TweetDTO tweet) {
