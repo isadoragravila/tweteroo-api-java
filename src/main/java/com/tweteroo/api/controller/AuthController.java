@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tweteroo.api.dto.UserDTO;
 import com.tweteroo.api.services.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/auth/sign-up")
@@ -22,7 +24,7 @@ public class AuthController {
   
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  public void signUp(@RequestBody UserDTO req) {
+  public void signUp(@RequestBody @Valid UserDTO req) {
     service.save(req);
   }
 }

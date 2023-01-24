@@ -21,6 +21,8 @@ import com.tweteroo.api.dto.TweetDTO;
 import com.tweteroo.api.model.Tweet;
 import com.tweteroo.api.services.TweetService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/tweets")
@@ -48,7 +50,7 @@ public class TweetController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> createTweet(@RequestBody TweetDTO req) {
+  public ResponseEntity<Void> createTweet(@RequestBody @Valid TweetDTO req) {
     var savedTweet = service.save(req);
     
     if(savedTweet != null) {
