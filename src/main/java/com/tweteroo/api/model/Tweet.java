@@ -19,7 +19,7 @@ public class Tweet {
 
   public Tweet(TweetDTO data, String avatar) {
     this.username = data.username();
-    this.tweet = data.tweet();
+    this.text = data.text();
     this.avatar = avatar;
   }
 
@@ -34,6 +34,6 @@ public class Tweet {
   private String avatar;
 
   @Column(nullable = false)
-  private String tweet;
+  private String text;
   
 }
